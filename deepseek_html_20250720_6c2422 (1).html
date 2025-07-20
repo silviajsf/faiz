@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Among the Stars — For Nurfaiz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400&family=Quicksand:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', 'Quicksand', sans-serif;
+            color: #f8f8f8;
+            background: linear-gradient(to bottom, #0f0524, #1a0933);
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: #f0e6d2;
+        }
+        
+        section {
+            min-height: 100vh;
+            width: 100%;
+            padding: 5rem 2rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Star Background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite ease-in-out;
+            opacity: 0;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; }
+            50% { opacity: var(--opacity); }
+        }
+        
+        /* Moon */
+        .moon {
+            position: absolute;
+            top: 10%;
+            right: 10%;
+            width: 100px;
+            height: 100px;
+            background: #f0e6d2;
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(240, 230, 210, 0.3);
+            z-index: 1;
+        }
+        
+        /* Aurora Effect */
+        .aurora {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(156, 204, 255, 0.1) 0%, rgba(178, 132, 255, 0.1) 50%, rgba(255, 204, 204, 0.1) 100%);
+            opacity: 0;
+            z-index: 1;
+            transition: opacity 2s ease;
+        }
+        
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            margin-top: 2rem;
+            background: transparent;
+            color: #f0e6d2;
+            border: 1px solid #f0e6d2;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
+        }
+        
+        .btn:hover {
+            background: rgba(240, 230, 210, 0.1);
+            box-shadow: 0 0 15px rgba(240, 230, 210, 0.3);
+        }
+        
+        .btn-glow {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(240, 230, 210, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(240, 230, 210, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(240, 230, 210, 0); }
+        }
+        
+        /* Section 1: Start Screen */
+        #start-screen {
+            text-align: center;
+        }
+        
+        #start-screen h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease forwards 0.5s;
+        }
+        
+        #start-screen p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease forwards 1s;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Section 2: Mini Game */
+        .stars-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .clickable-star {
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle at center, #f0e6d2 0%, #d4b483 100%);
+            clip-path: polygon(
+                50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%
+            );
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .clickable-star:hover {
+            transform: scale(1.1) rotate(10deg);
+            filter: drop-shadow(0 0 10px rgba(240, 230, 210, 0.7));
+        }
+        
+        .star-message {
+            background: rgba(15, 5, 36, 0.8);
+            border: 1px solid #5a4579;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            max-width: 600px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        
+        .star-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Section 3: Music Player */
+        .spotify-player {
+            margin: 2rem 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Section 4: Final Message */
+        .message-line {
+            opacity: 0;
+            transform: translateY(20px);
+            margin-bottom: 1.5rem;
+            transition: all 0.5s ease;
+        }
+        
+        .message-line.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Dawn Effect */
+        .dawn-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(72, 101, 160, 0) 0%, rgba(72, 101, 160, 0.3) 100%);
+            opacity: 0;
+            z-index: 1;
+            transition: opacity 3s ease;
+        }
+        
+        /* Signature */
+        .signature {
+            font-family: 'Playfair Display', cursive;
+            font-size: 2rem;
+            margin-top: 3rem;
+            opacity: 0;
+            animation: fadeIn 2s ease forwards 1s;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Star Background -->
+    <div class="stars" id="stars"></div>
+    
+    <!-- Moon -->
+    <div class="moon"></div>
+    
+    <!-- Aurora Effect -->
+    <div class="aurora" id="aurora"></div>
+    
+    <!-- Dawn Effect -->
+    <div class="dawn-effect" id="dawn-effect"></div>
+    
+    <!-- Start Screen -->
+    <section id="start-screen">
+        <div class="container">
+            <h1>Hi Nurfaiz <span style="font-size: 1.5em;">🌙</span></h1>
+            <p>I made this sky for you.<br>
+            Because I know the world's been a little unfair lately, and I wanted to give you a small space to just... breathe.</p>
+            <p>Let's begin this journey under the stars — one gentle tap at a time.</p>
+            <a href="#star-game" class="btn btn-glow">Start Your Journey</a>
+        </div>
+    </section>
+    
+    <!-- Star Game -->
+    <section id="star-game">
+        <div class="container">
+            <h2>Pick a Star</h2>
+            <p>Each holds a special message just for you</p>
+            
+            <div class="stars-container">
+                <div class="clickable-star" onclick="showStarMessage(0)"></div>
+                <div class="clickable-star" onclick="showStarMessage(1)"></div>
+                <div class="clickable-star" onclick="showStarMessage(2)"></div>
+                <div class="clickable-star" onclick="showStarMessage(3)"></div>
+                <div class="clickable-star" onclick="showStarMessage(4)"></div>
+            </div>
+            
+            <div class="star-message" id="star-message">
+                <!-- Messages will appear here -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- Music Player -->
+    <section id="music-section">
+        <div class="container">
+            <h2>This Song is Yours</h2>
+            <p>You've always been your own light — even when the world dimmed.<br>
+            You've been strong in silence. Brave in confusion.<br>
+            This song isn't just lyrics. It's a mirror.</p>
+            <p>And it says: "Everything you lose is a step you take."<br>
+            You're not just surviving, Faiz. You're becoming.</p>
+            
+            <div class="spotify-player">
+                <iframe src="https://open.spotify.com/embed/track/1x9NQbU5Fid2Bl5ByKfKBQ?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Final Message -->
+    <section id="final-message">
+        <div class="container">
+            <h2>From Me to You</h2>
+            
+            <div id="message-container">
+                <p class="message-line">Dear Nurfaiz,</p>
+                <p class="message-line">I know life hasn't been easy lately. You've faced exhaustion, pressure, and moments that made you question your worth.</p>
+                <p class="message-line">But let me remind you of something the world sometimes forgets to say: I am so, deeply, immensely proud of you.</p>
+                <p class="message-line">You showed up for KKN, and now you're preparing for your next chapter — internship.</p>
+                <p class="message-line">And through all of that, you've kept going. Even when it hurt. Even when no one clapped.</p>
+                <p class="message-line">You have the kind of resilience stars would envy.</p>
+                <p class="message-line">So tonight, I hope this little digital sky holds you for a while. I hope it whispers softly what you sometimes forget:</p>
+                <p class="message-line">You are worthy. You are enough. And you are so loved.</p>
+            </div>
+            
+            <div class="signature">with love,<br>Silvia Jultika</div>
+        </div>
+    </section>
+    
+    <script>
+        // Create stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 200;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // Random size between 1-3px
+                const size = Math.random() * 2 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                // Random position
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                
+                // Random animation properties
+                star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
+                star.style.setProperty('--opacity', Math.random() * 0.7 + 0.3);
+                
+                // Random delay
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // Star messages
+        const messages = [
+            "🌟 \"You did it. You went to KKN even when you were exhausted — and you stayed. That's not small. That's strength.\"",
+            "🌟 \"You're heading for internship soon. And look at you: growing, glowing, quietly proving to yourself that you can.\"",
+            "🌟 \"You're not behind. You're not late. You're on your own timeline, and it's beautiful.\"",
+            "🌟 \"Even when no one claps, I do. I see you — your effort, your tears, your late nights, your silent fights.\"",
+            "🌟 \"I'm so proud of you. Not because you're perfect, but because you keep showing up. For life. For yourself.\""
+        ];
+        
+        function showStarMessage(index) {
+            const messageBox = document.getElementById('star-message');
+            messageBox.textContent = messages[index];
+            messageBox.classList.add('show');
+            
+            // Trigger aurora effect
+            const aurora = document.getElementById('aurora');
+            aurora.style.opacity = '0.5';
+            setTimeout(() => {
+                aurora.style.opacity = '0';
+            }, 2000);
+        }
+        
+        // Animate final message lines
+        function animateMessageLines() {
+            const lines = document.querySelectorAll('.message-line');
+            lines.forEach((line, index) => {
+                setTimeout(() => {
+                    line.classList.add('show');
+                }, index * 800);
+            });
+            
+            // Trigger dawn effect at the end
+            setTimeout(() => {
+                document.getElementById('dawn-effect').style.opacity = '1';
+            }, (lines.length + 3) * 800);
+        }
+        
+        // Initialize everything when page loads
+        window.onload = function() {
+            createStars();
+            
+            // Animate final message when scrolled to
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    animateMessageLines();
+                    observer.unobserve(entries[0].target);
+                }
+            }, { threshold: 0.5 });
+            
+            observer.observe(document.getElementById('final-message'));
+        };
+    </script>
+</body>
+</html>
